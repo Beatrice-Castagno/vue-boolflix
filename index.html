@@ -18,7 +18,7 @@
         <h1 class="logo">Boolfix</h1>
         <div class="box-search">
           <input class="input-search" v-model="searchInput" type="text" value="" placeholder="Cerca..." @keyup.enter="searchFilm">
-          <button class="btn-search" type="button" name="button">Cerca</button>
+          <button class="btn-search" type="button" name="button" @click="searchFilm">Cerca</button>
         </div>
       </header>
       <!-- /intestazione -->
