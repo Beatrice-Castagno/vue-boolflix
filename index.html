@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Boolfix</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
+</head>
+</head>
+<body>
+  <div id="app">
+    <div class="container-app">
+      <!-- intestazione -->
+      <header>
+        <h1 class="logo">Boolfix</h1>
+        <div class="box-search">
+          <input class="input-search" v-model="searchInput" type="text" value="" placeholder="Cerca..." @keyup.enter="searchFilm">
+          <button class="btn-search" type="button" name="button">Cerca</button>
+        </div>
+      </header>
+      <!-- /intestazione -->
+      <!-- corpo -->
+      <main>
+        <div class="container-card">
+          <div class="card" v-for="card in resultsSearch">
+            <img class="img-card" v-bind:src="'https://image.tmdb.org/t/p/w400/'+card.poster_path">
+            <div class="box-info">
+              <h3 class="title-card">Titolo: {{card.title}}</h3>
+              <h3 class="title-card">Titolo originale: {{card.original_title}}</h3>
+              <p class="overview-card tronca-testo tronca-testo-2"><strong>Overview:</strong> {{card.overview}}</p>
+            </div>
+
+          </div>
+        </div>
+
+      </main>
+      <!-- /corpo -->
+    </div>
+  </div>
+<script src="js/script.js" charset="utf-8"></script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: grey;
+}
+
+header {
+  background-color: black;
+  display: flex;
+  justify-content: space-between;
+  height: 10%;
+  padding: 50px;
+  align-items: center;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 30px;
+  color: red;
+  text-transform: uppercase;
+}
+
+.input-search {
+  padding: 2px;
+}
+
+.btn-search {
+  padding: 2px;
+  margin-left: 10px;
+}
+
+.container-card {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 80px;
+  justify-content: center;
+  /* position: relative; */
+}
+
+.card {
+  margin: 30px 30px;
+  width: 150px;
+  text-align: center;
+}
+
+.img-card {
+  height: 250px;
+  width: 180px;
+}
+.title-card {
+  margin: 10px 0;
+}
+
+.tronca-testo-2 {
+-webkit-line-clamp: 3;
+}
+
+.tronca-testo {
+overflow: hidden;
+text-overflow: ellipsis;
+display: -webkit-box;
+-webkit-box-orient: vertical;
+}
+
+/* .overlay {
+  position: absolute;
+  bottom: 0;
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.5);
+  color: #f1f1f1;
+  width: 100%;
+  transition: .5s ease;
+  opacity: 0;
+  color: white;
+  font-size: 20px;
+  padding: 20px;
+  text-align: center;
+
+}
+.container-card:hover .overlay{
+  opacity 1;
+} */
