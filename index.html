@@ -9,13 +9,12 @@
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
 </head>
-</head>
 <body>
   <div id="app">
     <div class="container-app">
       <!-- intestazione -->
       <header>
-        <h1 class="logo">Boolfix</h1>
+        <img class="logo" src="img/boolflix.png" alt="boolflix-logo">
         <div class="box-search">
           <input class="input-search" v-model="searchInput" type="text" value="" placeholder="Cerca..." @keyup.enter="searchFilm">
           <button class="btn-search" type="button" name="button" @click="searchFilm">Cerca</button>
@@ -24,18 +23,30 @@
       <!-- /intestazione -->
       <!-- corpo -->
       <main>
+        <!-- risultato card movie -->
         <div class="container-card">
-          <div class="card" v-for="card in resultsSearch">
+          <div class="card" v-for="(card,indexCard) in resultsMovie" @mouseover="indexMovie = indexCard" @mouseout="indexMovie = null">
             <img class="img-card" v-bind:src="'https://image.tmdb.org/t/p/w400/'+card.poster_path">
-            <div class="box-info">
+            <div class="box-info" v-show="indexMovie == indexCard">
               <h3 class="title-card">Titolo: {{card.title}}</h3>
               <h3 class="title-card">Titolo originale: {{card.original_title}}</h3>
               <p class="overview-card tronca-testo tronca-testo-2"><strong>Overview:</strong> {{card.overview}}</p>
+              <p v-for="index in 5">{{card.vote_average}}</p>
             </div>
-
           </div>
+          <!-- /risultato card movie -->
+          <!-- risultato card tv -->
+          <div class="card" v-for="(card,indexCard) in resultsTv" @mouseover="indexMovie = indexCard" @mouseout="indexMovie = null">
+            <img class="img-card" v-bind:src="'https://image.tmdb.org/t/p/w400/'+card.poster_path">
+            <div class="box-info" v-show="indexMovie == indexCard">
+              <h3 class="title-card">Titolo: {{card.name}}</h3>
+              <h3 class="title-card">Titolo originale: {{card.original_name}}</h3>
+              <p class="overview-card tronca-testo tronca-testo-2"><strong>Overview:</strong> {{card.overview}}</p>
+              <p>{{card.vote_average}}</p>
+            </div>
+          </div>
+          <!-- /risultato card tv -->
         </div>
-
       </main>
       <!-- /corpo -->
     </div>
