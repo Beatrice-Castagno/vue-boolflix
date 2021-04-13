@@ -6,46 +6,100 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Boolfix</title>
   <link rel="stylesheet" href="css/style.css">
+  <!-- FONTAWESOME -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+  <!-- /FONTAWESOME -->
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
 </head>
 <body>
   <div id="app">
-    <div class="container-app">
+    <div class="container-app white">
       <!-- intestazione -->
-      <header>
-        <img class="logo" src="img/boolflix.png" alt="boolflix-logo">
-        <div class="box-search">
-          <input class="input-search" v-model="searchInput" type="text" value="" placeholder="Cerca..." @keyup.enter="searchFilm">
-          <button class="btn-search" type="button" name="button" @click="searchFilm">Cerca</button>
-        </div>
-      </header>
+        <header class="overlay">
+          <div class="content-header">
+            <img class="logo" src="img/boolflix.png" alt="boolflix-logo">
+            <div class="content-title-input">
+              <div class="title-header">
+                <h1>Film, serie TV e tanto altro. </br> Senza limiti.</h1>
+                <p>Guarda ciò che vuoi ovunque. Disdici quando vuoi.</p>
+              </div>
+              <div class="box-search">
+                <input class="input-search" v-model="searchInput" type="text" value="" placeholder="Cerca..." @keyup.enter="searchFilm">
+                <button class="btn-search white" type="button" name="button" @click="searchFilm">Cerca &#8250;</button>
+              </div>
+            </div>
+          </div>
+        </header>
+
       <!-- /intestazione -->
       <!-- corpo -->
       <main>
-        <!-- risultato card movie -->
+        <h2 class="search-results-user" v-show="resultsMovie != 0">Abbiamo trovato questi risultati per: "{{searchInput}}"</h2>
+
+        <!-- stampa card film -->
         <div class="container-card">
-          <div class="card" v-for="(card,indexCard) in resultsMovie" @mouseover="indexMovie = indexCard" @mouseout="indexMovie = null">
-            <img class="img-card" v-bind:src="'https://image.tmdb.org/t/p/w400/'+card.poster_path">
-            <div class="box-info" v-show="indexMovie == indexCard">
-              <h3 class="title-card">Titolo: {{card.title}}</h3>
-              <h3 class="title-card">Titolo originale: {{card.original_title}}</h3>
-              <p class="overview-card tronca-testo tronca-testo-2"><strong>Overview:</strong> {{card.overview}}</p>
-              <p v-for="index in 5">{{card.vote_average}}</p>
+
+          <div class="results-for-watching">
+            <h2 v-if="resultsMovie != 0">Film disponibili: </h2>
+          </div>
+          <div class="content-film">
+            <p v-show="resultsMovie.length == 0 && startSearch == true">Non ho trovato nessun risultato!</p>
+            <div class="card" v-for="(card,indexCard) in resultsMovie" @mouseover="indexMovie = indexCard" @mouseout="indexMovie = null" v-show="card.media_type == 'movie'">
+              <!-- foto copertina -->
+              <img class="img-card" v-bind:src="(card.poster_path ? 'https://image.tmdb.org/t/p/w400' + card.poster_path : 'img/unnamed.gif')">
+              <!-- /foto copertina -->
+              <div class="retro-card" v-show="indexMovie == indexCard">
+                <h3 class="title-card">{{card.title}}</h3>
+                <h4 v-show="card.original_title != card.title" class="title-card">{{card.original_title}}</h4>
+                <!-- bandiera -->
+                <div class="flags">
+                  <img v-bind:src="'img/'+ card.original_language +'.png'" alt="">
+                  <i v-else class="fas fa-flag"></i>
+                </div>
+                <!-- /bandiera -->
+                <p v-if="card.overview != 0" class="overview-card">{{card.overview}}</p>
+                <p v-else= class="overview-card">Trama non disponibile</p>
+                <!-- stelle voto -->
+                <div class="vote-stars">
+                  <p class="p-star"><span>Voto: </span><i class="fas fa-star" v-for="index in 5"></i></p>
+                  <!-- {{card.vote_average}} -->
+                </div>
+                <!-- /stelle voto -->
+              </div>
             </div>
           </div>
-          <!-- /risultato card movie -->
-          <!-- risultato card tv -->
-          <div class="card" v-for="(card,indexCard) in resultsTv" @mouseover="indexMovie = indexCard" @mouseout="indexMovie = null">
-            <img class="img-card" v-bind:src="'https://image.tmdb.org/t/p/w400/'+card.poster_path">
-            <div class="box-info" v-show="indexMovie == indexCard">
-              <h3 class="title-card">Titolo: {{card.name}}</h3>
-              <h3 class="title-card">Titolo originale: {{card.original_name}}</h3>
-              <p class="overview-card tronca-testo tronca-testo-2"><strong>Overview:</strong> {{card.overview}}</p>
-              <p>{{card.vote_average}}</p>
+          <!-- /stampa card film -->
+          <div class="results-for-watching">
+            <h2 v-show="resultsMovie != 0">Serie tv disponibili: </h2>
+          </div>
+          <!-- stampa card serie tv -->
+          <div class="content-series-tv">
+            <div class="card" v-for="(card,indexCard) in resultsMovie" @mouseover="indexMovie = indexCard" @mouseout="indexMovie = null" v-if="card.media_type == 'tv'">
+              <!-- immagine copertina -->
+              <img class="img-card" v-bind:src="(card.poster_path ? 'https://image.tmdb.org/t/p/w400' + card.poster_path : 'img/unnamed.gif')">
+              <!-- /immagine copertina -->
+              <div class="retro-card" v-show="indexMovie == indexCard">
+                <h3 class="title-card">{{card.title}}</h3>
+                <h4 v-show="card.original_title != card.title" class="title-card">{{card.original_title}}</h4>
+                <p v-if="card.overview != 0" class="overview-card">{{card.overview}}</p>
+                <p v-else class="overview-card">Trama non disponibile</p>
+                <!-- bandiera -->
+                <div class="flags">
+                  <img v-bind:src="'img/'+ card.original_language +'.png'" alt="">
+                  <i v-else class="fas fa-flag"></i>
+                </div>
+                <!-- /bandiera -->
+                <!-- stelle voto -->
+                <div class="vote-stars">
+                  <p class="p-star"><span>Voto: </span><i class="fas fa-star" v-for="index in 5"></i></p>
+                  <!-- {{card.vote_average}} -->
+                </div>
+                <!-- /stelle voto -->
+              </div>
             </div>
           </div>
-          <!-- /risultato card tv -->
+          <!-- /stampa card serie tv -->
         </div>
       </main>
       <!-- /corpo -->
