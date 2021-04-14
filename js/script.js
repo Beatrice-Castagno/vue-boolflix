@@ -23,7 +23,6 @@ var app = new Vue ({
   ]
  },
  methods: {
-
  searchFilm: function() {
    if (this.searchInput != "")  {
      axios.get(this.baseUrl + 'multi', {
@@ -32,13 +31,21 @@ var app = new Vue ({
          query: this.searchInput,
          language: this.language[this.indexLanguage]
         }
-       })
-       .then( (risposta) => {
+      }).then( (risposta) => {
         this.resultsMovie = risposta.data.results;
         console.log(this.resultsMovie);
-       });
+      });
+
       this.startSearch = true;
     }
+  },
+  containFilms: function (mediaType) {
+    for (i = 0; i < this.resultsMovie.length; i++) {
+      if (this.resultsMovie[i].media_type == mediaType) {
+        return true;
+      }
+    }
+    return false;
   }
  },
 

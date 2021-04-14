@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Boolfix</title>
+  <title>Boolflix</title>
+  <link rel="shortcut icon" href="img/favicon.ico" />
   <link rel="stylesheet" href="css/style.css">
   <!-- FONTAWESOME -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
@@ -18,7 +19,7 @@
       <!-- intestazione -->
         <header class="overlay">
           <div class="content-header">
-            <img class="logo" src="img/boolflix.png" alt="boolflix-logo">
+              <img class="logo" src="img/logo.png" alt="boolflix-logo">
             <div class="content-title-input">
               <div class="title-header">
                 <h1>Film, serie TV e tanto altro. </br> Senza limiti.</h1>
@@ -26,25 +27,22 @@
               </div>
               <div class="box-search">
                 <input class="input-search" v-model="searchInput" type="text" value="" placeholder="Cerca..." @keyup.enter="searchFilm">
-                <button class="btn-search white" type="button" name="button" @click="searchFilm">Cerca &#8250;</button>
+                <button class="btn btn-search white" type="button" name="button" @click="searchFilm">Cerca &#8250;</button>
               </div>
             </div>
           </div>
         </header>
-
       <!-- /intestazione -->
       <!-- corpo -->
       <main>
-        <h2 class="search-results-user" v-show="resultsMovie != 0">Abbiamo trovato questi risultati per: "{{searchInput}}"</h2>
-
+        <h2 class="search-results-user" v-show="resultsMovie != 0">{{resultsMovie.length}} risultati per: "{{searchInput}}"</h2>
         <!-- stampa card film -->
         <div class="container-card">
-
           <div class="results-for-watching">
-            <h2 v-if="resultsMovie != 0">Film disponibili: </h2>
+            <h2 v-show="containFilms('movie')">Film disponibili: </h2>
           </div>
           <div class="content-film">
-            <p v-show="resultsMovie.length == 0 && startSearch == true">Non ho trovato nessun risultato!</p>
+            <p class="p-no-results" v-show="resultsMovie.length == 0 && startSearch == true">Nessun risultato trovato!</p>
             <div class="card" v-for="(card,indexCard) in resultsMovie" @mouseover="indexMovie = indexCard" @mouseout="indexMovie = null" v-show="card.media_type == 'movie'">
               <!-- foto copertina -->
               <img class="img-card" v-bind:src="(card.poster_path ? 'https://image.tmdb.org/t/p/w400' + card.poster_path : 'img/unnamed.gif')">
@@ -62,8 +60,8 @@
                 <p v-else= class="overview-card">Trama non disponibile</p>
                 <!-- stelle voto -->
                 <div class="vote-stars">
-                  <p class="p-star"><span>Voto: </span><i class="fas fa-star" v-for="index in 5"></i></p>
-                  <!-- {{card.vote_average}} -->
+                  <p class="p-star"><span>Voto: </span><i class="fas fa-star" v-for="num in 5" v-bind:class="{'star-grey' : Math.round((card.vote_average/2)) < num}">
+                  </i></p>
                 </div>
                 <!-- /stelle voto -->
               </div>
@@ -71,7 +69,7 @@
           </div>
           <!-- /stampa card film -->
           <div class="results-for-watching">
-            <h2 v-show="resultsMovie != 0">Serie tv disponibili: </h2>
+            <h2 v-show="containFilms('tv')">Serie tv disponibili: </h2>
           </div>
           <!-- stampa card serie tv -->
           <div class="content-series-tv">
@@ -105,6 +103,6 @@
       <!-- /corpo -->
     </div>
   </div>
-<script src="js/script.js" charset="utf-8"></script>
+ <script src="js/script.js" charset="utf-8"></script>
 </body>
 </html>

@@ -12,36 +12,35 @@ header {
   background-image: url('https://assets.nflxext.com/ffe/siteui/vlv3/92bb3a0b-7e91-40a0-b27b-f2c3ac9ef6e4/427f698c-54be-4aba-bf62-d8d0d0a83510/IT-it-20210322-popsignuptwoweeks-perspective_alpha_website_small.jpg');
   background-size: cover;
   height: 600px;
-  border-bottom: 5px solid #23282B;
+  border-bottom: 5px solid #333;
   position: relative;
 }
+
+/* color */
 
 .white {
   color: white;
 }
 
+/* button */
+
+.btn {
+  background-color: red;
+  border: none;
+  font-weight: bold;
+  outline: none;
+}
+
+.btn-search {
+  padding: 20px;
+  font-size: 20px;
+}
+
+/* header */
+
 .content-header {
   position: relative;
   z-index: 10;
-  color: white;
-}
-
-.content-title-input {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.title-header {
-  text-align: center;
-  font-weight: bold;
-  font-size: 30px;
-}
-
-.title-header > p {
-  margin-top: 10px;
-  font-size: 20px;
 }
 
 .overlay::after {
@@ -58,7 +57,26 @@ header {
 
 .logo {
  margin: 40px 40px;
- height: 60px;
+ height: 70px;
+}
+
+.content-title-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+.title-header {
+  text-align: center;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.title-header > p {
+  margin-top: 10px;
+  font-size: 20px;
 }
 
 .box-search {
@@ -76,39 +94,34 @@ header {
   width: 25%;
 }
 
-.btn-search {
-  padding: 20px;
-  font-size: 20px;
-  background-color: red;
-  border: none;
-  font-weight: bold;
-  outline: none;
-}
+/* main */
 
 .container-card {
   padding: 50px;
   justify-content: center;
 }
 
-.content-series-tv,
-.content-film {
+.content-film,
+.content-series-tv {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 
-.results-for-watching > h2 {
-  color: white;
+.results-for-watching > h2,
+.p-no-results {
   font-size: 25px;
 }
 
 .search-results-user {
   text-align: center;
   margin-top: 20px;
-  font-size: 40px;
+  font-size: 30px;
 }
+/* card */
 
 .card {
+  cursor: pointer;
   height: 100%;
   position: relative;
   margin: 30px 30px;
@@ -144,7 +157,10 @@ header {
   height: 450px;
   width: 320px;
   overflow: auto;
+  transition: 2s;
 }
+
+/* scrollbar */
 
 ::-webkit-scrollbar {
   width: 6px;
@@ -156,6 +172,7 @@ header {
 
 ::-webkit-scrollbar-thumb {
   background-color: #474A51;
+  border-radius: 2px;
 }
 
 ::-webkit-scrollbar-button {
@@ -163,14 +180,16 @@ header {
 }
 
 .flags > img {
-  height: 50px;
+  height: 40px;
   margin: 10px;
 }
+
+/* star vote */
 
 .vote-stars {
  padding: 20px;
  height: 100%;
- justify-content: flex-end;
+ text-align: center;
 }
 
 .vote-stars > p {
@@ -180,4 +199,8 @@ margin-top: 10px;
 
 .fa-star {
   color: yellow;
+}
+
+.star-grey {
+  color: grey;
 }
